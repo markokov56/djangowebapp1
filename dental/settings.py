@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+import django_heroku    #for heroku
+import dj_database_url    #for heroku
+from decouple import config   #for heroku
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -48,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  #for heroku
+
 ]
 
 ROOT_URLCONF = 'dental.urls'
@@ -124,6 +130,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'    #for heroku
 
 #email settings
 #development setting
@@ -147,3 +154,4 @@ EMAIL_HOST_PASSWORD = 'txrmsslyvhtgtnbv'
 EMAIL_USE_TLS = True
 #EMAIL_USE_SSL = False
 
+django_heroku.settings(locals())    #for heroku
